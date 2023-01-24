@@ -13,8 +13,8 @@ class NotesService {
     const updatedAt = createdAt
     const newNote = {
       title, tags, body, id, createdAt, updatedAt,
-    };
-    this._notes.push(newNote);
+    }
+    this._notes.push(newNote)
     const isSuccess = this._notes.filter((note) => note.id === id).length > 0
 
     if (!isSuccess) {
@@ -52,7 +52,7 @@ class NotesService {
   }
 
   deleteNoteById(id) {
-    const index = this._notes.findIndex((note) => note.id === id);
+    const index = this._notes.findIndex((note) => note.id === id)
 
     if (index === -1) {
       throw new NotFoundError('Catatan gagal dihapus. Id tidak ditemukan')
