@@ -14,10 +14,9 @@ class NotesHandler {
       status: 'success',
       message: 'Catatan berhasil ditambahkan',
       data: {
-        noteId,
-      },
+        noteId
+      }
     }).code(201)
-
   }
 
   async getNotesHandler() {
@@ -25,7 +24,7 @@ class NotesHandler {
     return {
       status: 'success',
       data: {
-        notes,
+        notes
       }
     }
   }
@@ -36,8 +35,8 @@ class NotesHandler {
     return {
       status: 'success',
       data: {
-        note,
-      },
+        note
+      }
     }
   }
 
@@ -49,18 +48,18 @@ class NotesHandler {
 
     return {
       status: 'success',
-      message: 'Catatan berhasil diperbarui',
+      message: 'Catatan berhasil diperbarui'
     }
   }
 
   async deleteNoteByIdHandler(request, h) {
-    const { id } = request.params;
-    await this._service.deleteNoteById(id);
+    const { id } = request.params
+    await this._service.deleteNoteById(id)
 
     return {
       status: 'success',
-      message: 'Catatan berhasil dihapus',
-    };
+      message: 'Catatan berhasil dihapus'
+    }
   }
 }
 
