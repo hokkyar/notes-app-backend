@@ -64,12 +64,12 @@ class UsersService {
       values: [username]
     }
 
-    const { rowCount, rows } = await this._pool.query(query)
-    if (!rowCount) {
+    const result = await this._pool.query(query)
+    if (!result.rowCount) {
       throw new AuthenticationError('Kredensial yang Anda berikan salah')
     }
 
-    const { id, password: hashedPassword } = rows[0]
+    const { id, password: hashedPassword } = result.rows[0]
     const match = await bcrypt.compare(password, hashedPassword)
 
     if (!match) {

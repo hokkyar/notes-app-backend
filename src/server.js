@@ -24,8 +24,12 @@ const collaborations = require('./api/collaborations')
 const CollaborationsService = require('./services/postgres/CollaborationsService')
 const CollaborationsValidator = require('./validator/collaborations')
 
+// Exports
+const _exports = require('./api/exports')
+const ProducerService = require('./services/rabbitmq/ProducerService')
+const ExportsValidator = require('./validator/exports')
+
 const ClientError = require('./exceptions/ClientError')
-const AuthenticationError = require('./exceptions/AuthenticationError')
 
 const init = async () => {
   const collaborationsService = new CollaborationsService()
@@ -46,7 +50,7 @@ const init = async () => {
   server.ext('onPreResponse', (request, h) => {
     const { response } = request
     if (response instanceof Error) {
-      if (response instanceof ClientError || response instanceof AuthenticationError) {
+      if (response instanceof ClientError) {
         return h.response({
           status: 'fail',
           message: response.message
@@ -119,6 +123,13 @@ const init = async () => {
         collaborationsService,
         notesService,
         validator: CollaborationsValidator
+      }
+    },
+    {
+      plugin: _exports,
+      options: {
+        service: ProducerService,
+        validator: ExportsValidator
       }
     }
   ])
